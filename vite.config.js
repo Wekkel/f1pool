@@ -14,8 +14,8 @@ export default defineConfig({
         theme_color: '#6366F1',
         background_color: '#15151E',
         display: 'standalone',
-        start_url: '/f1-pool/',
-        scope: '/f1-pool/',
+        start_url: '/f1pool/',
+        scope: '/f1pool/',
         icons: [
           {
             src: 'icon.svg',
@@ -38,5 +38,5 @@ export default defineConfig({
       },
     }),
   ],
-  base: '/f1-pool/',
+  base: '/f1pool/',
 })

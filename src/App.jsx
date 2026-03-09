@@ -12,7 +12,7 @@ import ScenarioPage from "./pages/ScenarioPage";
 export default function App() {
   return (
     <ThemeProvider>
-      <BrowserRouter basename="/f1-pool">
+      <BrowserRouter basename="/f1pool">
         <div className="min-h-screen bg-gray-50 dark:bg-f1dark flex flex-col transition-colors duration-200">
           <Navbar />
           <main className="flex-1">
