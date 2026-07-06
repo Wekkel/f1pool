@@ -1,18 +1,18 @@
 // src/pages/HomePage.jsx
-import { useMemo } from "react";
 import { useRaceData } from "../hooks/useRaceData";
 import { usePoolStand } from "../hooks/usePoolStand";
 import PoolStand from "../components/Stand/PoolStand";
 import LoadingSpinner from "../components/UI/LoadingSpinner";
 import ErrorBanner from "../components/UI/ErrorBanner";
 import GrandPrixBadge from "../components/UI/GrandPrixBadge";
-import { KALENDER_2026 } from "../data/kalender";
+import { GEPLANDE_RACES } from "../data/kalender";
 import { Calendar, Flag } from "lucide-react";
 
 function VolgendeRace() {
   const vandaag = new Date();
-  const volgende = KALENDER_2026.find(r => new Date(r.datum) >= vandaag);
-  if (!volgende) return null;
+  const idx = GEPLANDE_RACES.findIndex(r => new Date(r.datum) >= vandaag);
+  if (idx === -1) return null;
+  const volgende = GEPLANDE_RACES[idx];
 
   const datum = new Date(volgende.datum);
   const datumStr = datum.toLocaleDateString("nl-NL", {
@@ -29,7 +29,8 @@ function VolgendeRace() {
       <p className="text-gray-500 dark:text-gray-400 text-sm mt-2">{volgende.circuit}</p>
       <p className="text-gray-500 text-xs mt-1 capitalize">{datumStr}</p>
       <div className="mt-3 text-xs text-gray-500">
-        Race {volgende.nr} van 24
+        Race {idx + 1} van {GEPLANDE_RACES.length}
+        {volgende.sprint && <span className="ml-1.5 text-purple-500 font-semibold">· sprintweekend</span>}
       </div>
     </div>
   );
@@ -37,6 +38,7 @@ function VolgendeRace() {
 
 function GereedRaces({ races }) {
   if (races.length === 0) return null;
+  const totaal = GEPLANDE_RACES.length;
   return (
     <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl p-5 shadow-lg">
       <div className="flex items-center gap-2 text-f1red text-xs font-bold uppercase tracking-widest mb-3">
@@ -44,13 +46,13 @@ function GereedRaces({ races }) {
         Seizoensvoortgang
       </div>
       <div className="flex items-center gap-3">
-        <div className="text-3xl font-heading font-bold text-gray-900 dark:text-white">{races.length}</div>
-        <div className="text-gray-500 dark:text-gray-400 text-sm">van 24 races gereden</div>
+        <div className="text-3xl font-heading font-bold text-gray-900 dark:text-white tabular-nums">{races.length}</div>
+        <div className="text-gray-500 dark:text-gray-400 text-sm">van {totaal} races gereden</div>
       </div>
       <div className="mt-3 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
         <div
           className="bg-f1red h-2 rounded-full transition-all"
-          style={{ width: `${(races.length / 24) * 100}%` }}
+          style={{ width: `${Math.min((races.length / totaal) * 100, 100)}%` }}
         />
       </div>
     </div>
