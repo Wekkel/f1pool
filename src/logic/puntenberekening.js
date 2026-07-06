@@ -14,7 +14,7 @@ import { SPRINT_KWALI_UITSLAGEN } from "../data/sprintKwaliUitslagen";
  * Robin Vermeulen: -1 punt (correctie beheerder, race 1, v3.0 Excel).
  */
 export const HANDMATIGE_CORRECTIES = {
-  // "robin-vermeulen": -1,
+  7: -1, // Robin Vermeulen — correctie beheerder, race 1
 };
 
 /**
