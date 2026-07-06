@@ -6,6 +6,8 @@ import {
   SPRINT_KWALI_BONUS_PUNTEN,
 } from "../data/puntensysteem";
 
+import { SPRINT_KWALI_UITSLAGEN } from "../data/sprintKwaliUitslagen";
+
 /**
  * Handmatige correcties conform het officiële Excel-bestand.
  * Sleutel: deelnemer.id (pas aan naar jouw DEELNEMERS-structuur).
@@ -92,10 +94,10 @@ export function berekenPunten(deelnemer, races, kwalis, sprints, sprintKwalis = 
       }
     });
 
-    // Sprint-kwalificatie bonus: 1 pt bij exact dezelfde voorspelde
-    // positie als voor de GP-kwalificatie (kolom E in de Excel)
-    const sprintKwaliRace = sprintKwalis.find(sk => Number(sk.round) === raceNr);
-    sprintKwaliRace?.SprintKwaliResults?.forEach(result => {
+   // Sprint-kwalificatie bonus: 1 pt bij exact dezelfde voorspelde
+    // positie als voor de GP-kwalificatie
+    const sprintKwaliResults = SPRINT_KWALI_UITSLAGEN[race.Circuit?.circuitId];
+    sprintKwaliResults?.forEach(result => {
       if (coureurNummers.includes(String(result.number))) {
         const actuelePos = geklasseerdePositie(result);
         const coureur = deelnemer.coureurs.find(c => String(c.nr) === String(result.number));
