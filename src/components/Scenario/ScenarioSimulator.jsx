@@ -2,31 +2,35 @@
 import { useState, useMemo } from "react";
 import { berekenScenario } from "../../logic/puntenberekening";
 import { DEELNEMERS } from "../../data/deelnemers";
-import { KALENDER_2026 } from "../../data/kalender";
-import { COMPETITIE_RACE_PUNTEN } from "../../data/puntensysteem";
+import { GEPLANDE_RACES } from "../../data/kalender";
 
-// Alle unieke coureurs uit de pool
+// Alle unieke coureurs uit de pool, op driverId
 const ALLE_COUREURS = Array.from(
   new Map(
-    DEELNEMERS.flatMap(d => d.coureurs).map(c => [c.nr, c])
+    DEELNEMERS.flatMap(d => d.coureurs).map(c => [c.driverId, c])
   ).values()
 ).sort((a, b) => a.naam.localeCompare(b.naam));
 
-function buildScenarioRace(raceNr, topTien) {
-  // topTien = array van coureur nr's (positie 1 t/m 10)
+function buildScenarioRace(kalenderNr, topTien) {
+  // topTien = array van driverId's (positie 1 t/m 10).
+  // Rondenummer 900+ voorkomt botsingen met echte API-rondes: anders
+  // zouden kwali/sprint-uitslagen van een bestaande ronde per ongeluk
+  // óók aan de scenario-race worden toegerekend.
   return {
-    round: String(raceNr),
-    raceName: `Scenario Race ${raceNr}`,
+    round: String(900 + kalenderNr),
+    raceName: `Scenario Race ${kalenderNr}`,
     Circuit: { circuitId: "scenario" },
-    Results: topTien.map((nr, i) => ({
-      number: String(nr),
+    Results: topTien.map((driverId, i) => ({
       position: String(i + 1),
+      positionText: String(i + 1),
+      Driver: { driverId },
     })),
   };
 }
 
 export default function ScenarioSimulator({ races, kwalis, sprints }) {
-  const toekomstigeRaces = KALENDER_2026.filter(r => r.nr > races.length);
+  const vandaag = new Date();
+  const toekomstigeRaces = GEPLANDE_RACES.filter(r => new Date(r.datum) >= vandaag);
 
   const [geselecteerdeRace, setGeselecteerdeRace] = useState(null);
   const effectieveRace = geselecteerdeRace ?? toekomstigeRaces[0]?.nr ?? null;
@@ -36,7 +40,7 @@ export default function ScenarioSimulator({ races, kwalis, sprints }) {
     const gevuld = topTien.filter(Boolean);
     if (gevuld.length < 3) return null;
 
-    const scenarioRace = buildScenarioRace(effectieveRace, gevuld.map(Number));
+    const scenarioRace = buildScenarioRace(effectieveRace, gevuld);
     return berekenScenario(DEELNEMERS, races, kwalis, sprints, [scenarioRace]);
   }, [topTien, effectieveRace, races, kwalis, sprints]);
 
@@ -60,7 +64,7 @@ export default function ScenarioSimulator({ races, kwalis, sprints }) {
           className="bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-f1red"
         >
           {toekomstigeRaces.map(r => (
-            <option key={r.nr} value={r.nr}>Race {r.nr} — {r.naam}</option>
+            <option key={r.nr} value={r.nr}>{r.naam}{r.sprint ? " (sprint)" : ""} — {new Date(r.datum).toLocaleDateString("nl-NL")}</option>
           ))}
         </select>
       </div>
@@ -83,9 +87,9 @@ export default function ScenarioSimulator({ races, kwalis, sprints }) {
               >
                 <option value="">— selecteer coureur —</option>
                 {ALLE_COUREURS
-                  .filter(c => !topTien.includes(String(c.nr)) || topTien[i] === String(c.nr))
+                  .filter(c => !topTien.includes(c.driverId) || topTien[i] === c.driverId)
                   .map(c => (
-                    <option key={c.nr} value={c.nr}>#{c.nr} {c.naam}</option>
+                    <option key={c.driverId} value={c.driverId}>#{c.nr} {c.naam}</option>
                   ))}
               </select>
             </div>
