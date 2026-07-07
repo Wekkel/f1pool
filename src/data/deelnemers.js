@@ -96,7 +96,7 @@ export const DEELNEMERS = [
     teamnaam: "Maximax F1 Team",
     deelnemer: "Ronald Heuveling",
     coureurs: [
-      { nr: 4,  naam: "Lando Norris",      team: "McLaren",          kwaliPositie: 3 },
+      { nr: 1,  naam: "Lando Norris",      team: "McLaren",          kwaliPositie: 3 },
       { nr: 63, naam: "George Russell",    team: "Mercedes",         kwaliPositie: 1 },
       { nr: 16, naam: "Charles Leclerc",   team: "Scuderia Ferrari", kwaliPositie: 4 },
       { nr: 55, naam: "Carlos Sainz Jr.",  team: "Williams",         kwaliPositie: 10 },
@@ -109,7 +109,7 @@ export const DEELNEMERS = [
     teamnaam: "TomTom F1®",
     deelnemer: "Tom W. Oosterloo",
     coureurs: [
-      { nr: 4,  naam: "Lando Norris",      team: "McLaren",          kwaliPositie: 1 },
+      { nr: 1,  naam: "Lando Norris",      team: "McLaren",          kwaliPositie: 1 },
       { nr: 63, naam: "George Russell",    team: "Mercedes",         kwaliPositie: 4 },
       { nr: 16, naam: "Charles Leclerc",   team: "Scuderia Ferrari", kwaliPositie: 2 },
       { nr: 55, naam: "Carlos Sainz Jr.",  team: "Williams",         kwaliPositie: 7 },
@@ -122,7 +122,7 @@ export const DEELNEMERS = [
     teamnaam: "Simply Lovely 1.6 Grandland OPC",
     deelnemer: "Lisa Verweij",
     coureurs: [
-      { nr: 4,  naam: "Lando Norris",      team: "McLaren",          kwaliPositie: 2 },
+      { nr: 1,  naam: "Lando Norris",      team: "McLaren",          kwaliPositie: 2 },
       { nr: 12, naam: "Kimi Antonelli",    team: "Mercedes",         kwaliPositie: 6 },
       { nr: 16, naam: "Charles Leclerc",   team: "Scuderia Ferrari", kwaliPositie: 3 },
       { nr: 23, naam: "Alexander Albon",   team: "Williams",         kwaliPositie: 9 },
@@ -148,7 +148,7 @@ export const DEELNEMERS = [
     teamnaam: "Midget-GT RS-Racing",
     deelnemer: "Guido Schoonderbeek",
     coureurs: [
-      { nr: 4,  naam: "Lando Norris",      team: "McLaren",          kwaliPositie: 2 },
+      { nr: 1,  naam: "Lando Norris",      team: "McLaren",          kwaliPositie: 2 },
       { nr: 63, naam: "George Russell",    team: "Mercedes",         kwaliPositie: 4 },
       { nr: 16, naam: "Charles Leclerc",   team: "Scuderia Ferrari", kwaliPositie: 3 },
       { nr: 41, naam: "Arvid Lindblad",    team: "Racing Bulls",     kwaliPositie: 9 },
